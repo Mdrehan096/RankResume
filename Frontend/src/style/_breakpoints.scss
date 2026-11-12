@@ -1,0 +1,73 @@
+// ── Responsive Breakpoints ────────────────────────────────────────────────────
+// Mobile:         320px – 480px
+// Tablet:         481px – 768px
+// Small laptop:   769px – 1024px
+// Laptop/Desktop: 1025px – 1440px
+// Large desktop:  1441px+
+
+$bp-mobile-max: 480px;
+$bp-tablet-min: 481px;
+$bp-tablet-max: 768px;
+$bp-small-laptop-min: 769px;
+$bp-small-laptop-max: 1024px;
+$bp-desktop-min: 1025px;
+$bp-desktop-max: 1440px;
+$bp-large-desktop-min: 1441px;
+
+// Used by 3-column Interview shell where sidebars transition to toggleable panel
+$bp-interview-collapse-max: 900px;
+
+@mixin mobile {
+    @media (max-width: #{$bp-mobile-max}) {
+        @content;
+    }
+}
+
+@mixin tablet-only {
+    @media (min-width: #{$bp-tablet-min}) and (max-width: #{$bp-tablet-max}) {
+        @content;
+    }
+}
+
+@mixin tablet-down {
+    @media (max-width: #{$bp-tablet-max}) {
+        @content;
+    }
+}
+
+@mixin tablet-up {
+    @media (min-width: #{$bp-tablet-min}) {
+        @content;
+    }
+}
+
+@mixin small-laptop-only {
+    @media (min-width: #{$bp-small-laptop-min}) and (max-width: #{$bp-small-laptop-max}) {
+        @content;
+    }
+}
+
+@mixin small-laptop-down {
+    @media (max-width: #{$bp-small-laptop-max}) {
+        @content;
+    }
+}
+
+@mixin desktop-up {
+    @media (min-width: #{$bp-desktop-min}) {
+        @content;
+    }
+}
+
+@mixin large-desktop {
+    @media (min-width: #{$bp-large-desktop-min}) {
+        @content;
+    }
+}
+
+@mixin interview-collapse {
+    @media (max-width: #{$bp-interview-collapse-max}) {
+        @content;
+    }
+}
+

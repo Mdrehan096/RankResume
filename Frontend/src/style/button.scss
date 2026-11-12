@@ -1,0 +1,40 @@
+@use "./breakpoints" as bp;
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    padding-inline: 1.5rem;
+    padding-block: 0.75rem;
+    min-height: 44px;
+    border-radius: 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease;
+
+    &.primary-button {
+        background-color: #e1034d;
+        color: white;
+
+        &:hover:not(:disabled) {
+            background-color: #c90345;
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid #ff2d78;
+        outline-offset: 2px;
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.98);
+    }
+
+    @include bp.mobile {
+        width: 100%;
+        padding-inline: 1.15rem;
+    }
+}
