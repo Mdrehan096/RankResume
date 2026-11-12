@@ -1,11 +1,12 @@
-﻿{
+﻿
+{
   "rewrites": [
     {
       "source": "/api/:path*",
       "destination": "https://rankresume-backend.onrender.com/api/:path*"
     },
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "destination": "/index.html"
     }
   ]
