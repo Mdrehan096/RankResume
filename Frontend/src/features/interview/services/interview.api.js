@@ -38,7 +38,7 @@ export const generateInterviewReport = async ({ jobDescription, selfDescription,
     }
 
     try {
-        const response = await api.post("/api/interview/", formData);
+        const response = await api.post("/api/interview", formData);
         return response.data;
     } catch (err) {
         throw new Error(await extractErrorMessage(err, "Failed to generate interview report."));
