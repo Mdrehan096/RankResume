@@ -11,21 +11,50 @@ app.use(securityHeaders)
 app.use(express.json({ limit: "100kb" }))
 app.use(cookieParser())
 
-const defaultOrigins = "http://localhost:5173,http://127.0.0.1:5173"
-const allowedOrigins = (process.env.CLIENT_URL || defaultOrigins)
+const defaultOrigins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000",
+    "https://rank-resume-alpha.vercel.app",
+]
+
+const envOrigins = (process.env.CLIENT_URL || "")
     .split(",")
-    .map((origin) => origin.trim())
+    .map((origin) => origin.trim().replace(/\/+$/, ""))
     .filter(Boolean)
+
+const allowedOriginSet = new Set([...defaultOrigins, ...envOrigins])
+
+function isAllowedOrigin(origin) {
+    if (!origin) return true
+    const normalized = origin.trim().replace(/\/+$/, "")
+    if (allowedOriginSet.has(normalized)) return true
+    try {
+        const url = new URL(normalized)
+        if (
+            url.hostname.endsWith(".vercel.app") ||
+            url.hostname === "localhost" ||
+            url.hostname === "127.0.0.1"
+        ) {
+            return true
+        }
+    } catch {
+        // invalid origin url
+    }
+    return false
+}
 
 app.use(cors({
     origin(origin, callback) {
-        // Allow requests without Origin (e.g. same-origin, server-to-server, curl) or configured origins
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (isAllowedOrigin(origin)) {
             return callback(null, true)
         }
         return callback(null, false)
     },
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
 }))
 
 /* require all the routes here */
@@ -89,3 +118,4 @@ app.use((err, req, res, next) => {
 })
 
 module.exports = app
+module.exports.isAllowedOrigin = isAllowedOrigin

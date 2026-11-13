@@ -1,15 +1,11 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "").trim().replace(/\/+$/, "");
 
-// const api = axios.create({
-//     baseURL: API_BASE_URL,
-//     withCredentials: true,
-// });
 const api = axios.create({
+    baseURL: API_BASE_URL || undefined,
     withCredentials: true,
 });
-
 async function extractErrorMessage(err, fallback) {
     const data = err?.response?.data;
     if (data instanceof Blob) {

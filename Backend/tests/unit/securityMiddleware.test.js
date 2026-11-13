@@ -34,7 +34,7 @@ describe("security.middleware unit tests", () => {
         assert.equal(res.headers["X-Content-Type-Options"], "nosniff")
         assert.equal(res.headers["X-Frame-Options"], "DENY")
         assert.equal(res.headers["Referrer-Policy"], "no-referrer")
-        assert.equal(res.headers["Cross-Origin-Resource-Policy"], "same-site")
+        assert.equal(res.headers["Cross-Origin-Resource-Policy"], "cross-origin")
     })
 
     it("enforces request limits and sets Retry-After on 429", () => {
